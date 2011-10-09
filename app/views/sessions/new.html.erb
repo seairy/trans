@@ -1,0 +1,11 @@
+<%= form_tag signin_path, :id => 'signin' do %>
+  <fieldset class="signin">
+    <ul>
+      <li><label>帐号:</label><%= text_field_tag :account %></li>
+    </ul>
+    <ul>
+      <li><label>密码:</label><%= password_field_tag :password %></li>
+    </ul>
+    <%= submit_tag 'signin' %>
+  </fieldset>
+<% end %>

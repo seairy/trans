@@ -1,0 +1,11 @@
+<h1>批量上传翻译外文文档</h1>
+<%= form_tag batch_upload_translations_path, :id => 'batch_upload_translations', :multipart => true do %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>RAR文件：</label><%= file_field_tag :file, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '批量上传', '#', :onclick => "submitForm('batch_upload_translations')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

@@ -1,0 +1,48 @@
+<h1>查看文档<span><%= link_to '编辑', edit_translation_path(@translation) %></span></h1>
+<fieldset class="form-generic">
+  <ul>
+    <li><label>所属分类：</label><%= @translation.document.category.ancestors.map{|n| n.name}.join '-' %></li>
+  </ul>
+  <ul>
+    <li><label>中文文档标题：</label><%= @translation.document.title %></li>
+  </ul>
+  <ul>
+    <li><label>翻译语言：</label><%= @translation.language.name %></li>
+  </ul>
+  <ul>
+    <li><label>字数统计：</label><%= @translation.document.word_count %></li>
+  </ul>
+  <ul>
+    <li><label>状态：</label><%= human_translation_state_for @translation.state %></li>
+  </ul>
+  <ul>
+    <li><label>原始中文文档：</label><%= link_to '点击下载', @translation.document.file %></li>
+  </ul>
+  <ul>
+    <li><label>翻译文档：</label><%= link_to '点击下载', @translation.file.uri unless @translation.file.blank? %></li>
+  </ul>
+  <ul>
+    <li><label>译员：</label><%= @translation.linguister.name unless @translation.linguister.blank? %></li>
+  </ul>
+  <ul>
+    <li><label>润色：</label><%= @translation.embellisher.name unless @translation.embellisher.blank? %></li>
+  </ul>
+  <ul>
+    <li><label>审稿：</label><%= @translation.reader.name unless @translation.reader.blank? %></li>
+  </ul>
+  <ul>
+    <li><label>编辑：</label><%= @translation.editor.name unless @translation.editor.blank? %></li>
+  </ul>
+</fieldset>
+<ul class="comments">
+  <% @translation.comments.each do |comment| %>
+    <li><%= comment.user.name %> 在 <%= human_datetime_for comment.created_at %> 说：<%= comment.content %></li>
+  <% end %>
+</ul>
+<div class="separator"></div>
+<%= form_for [@translation, @comment] do |f| %>
+  <div class="new-comment">
+    <%= f.text_area :content %>
+    <%= link_to '发表评论', '#', :onclick => "submitForm('new_comment')", :class => 'button' %>
+  </div>
+<% end %>

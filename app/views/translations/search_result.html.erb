@@ -1,0 +1,24 @@
+<h1>“<%= params[:keywords] %>”的搜索结果<span><%= link_to '重新搜索', search_translations_path %></span></h1>
+<table class="list-generic">
+  <tr>
+    <th>ID</th>
+    <th>中文文档标题</th>
+    <th>翻译语种</th>
+    <th>指派人</th>
+    <th>状态</th>
+  </tr>
+  <% if @translations.blank? %>
+    <%= raw empty_record_tag %>
+  <% else %>
+    <% @translations.each_with_index do |translation, index| %>
+      <tr class="<%= odevity_tag index %>">
+        <td><%= link_to translation.id, translation %></td>
+        <td><%= translation.document.title %></td>
+        <td><%= translation.language.name %></td>
+        <td><%= translation.assignee.name %></td>
+        <td><%= human_translation_state_for translation.state %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<%= will_paginate @translations %>

@@ -1,0 +1,34 @@
+<h1>批量指派外文文档</h1>
+<%= form_tag batch_assign_translations_path, :id => 'batch_assign' do %>
+<table class="list-generic">
+  <tr>
+    <th>&nbsp;</th>
+    <th>分类</th>
+    <th>中文标题</th>
+    <th>翻译语言</th>
+  </tr>
+  <% if @translations.blank? %>
+    <%= raw empty_record_tag %>
+  <% else %>
+    <% @translations.each_with_index do |translation, index| %>
+      <tr class="<%= odevity_tag index %>">
+        <td><%= check_box_tag 'translation_ids[]', translation.id %></td>
+        <td><%= translation.document.category.name %></td>
+        <td><%= translation.document.title %></td>
+        <td><%= translation.language.name %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'translation_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'translation_ids[]'); return false;" %>
+<div class="separator"></div>
+<div class="languages">
+  <%= raw all_languages.map {|l| "<span>#{check_box_tag 'language_ids[]', l.id, :checked => true} #{l.name}</span>"}.join ' ' %>
+</div>
+<%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'language_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'language_ids[]'); return false;" %> / <%= link_to '选择8种大语言', "javascript:selectPopularLanguages('language_ids[]'); return false;" %> / <%= link_to '选择36种小语言', "javascript:selectUnpopularLanguages('language_ids[]'); return false;" %>
+<div class="separator"></div>
+<h3>选择指派人</h3>
+<%= collection_select nil, :assignee_id, all_assignees, :id, :name %>
+<div class="separator"></div>
+<%= link_to '批量指派', '#', :onclick => "submitForm('batch_assign')", :class => 'button' %>
+<% end %>

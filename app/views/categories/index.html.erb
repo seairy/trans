@@ -1,0 +1,7 @@
+<h1>分类列表</h1>
+<div class="categories-list">
+  <%= render_tree @categories do |node, child| %>
+    <li><%= node.name %> <%= link_to '编辑', edit_category_path(node) %></li>
+    <%= child %>
+  <% end %>
+</div>

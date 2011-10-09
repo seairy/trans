@@ -1,0 +1,50 @@
+<h1>编辑文档</h1>
+<%= form_for @translation do |f| %>
+  <%= render "shared/error_messages", :target => @translation %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>所属分类：</label><%= @translation.document.category.ancestors.map{|n| n.name}.join '-' %></li>
+    </ul>
+    <ul>
+      <li><label>中文文档标题：</label><%= @translation.document.title %></li>
+    </ul>
+    <ul>
+      <li><label>翻译语言：</label><%= @translation.language.name %></li>
+    </ul>
+    <ul>
+      <li><label>状态：</label><%= human_translation_state_for @translation.state %></li>
+    </ul>
+    <ul>
+      <li>
+        <label>译员：</label>
+        <%= f.autocomplete_field :linguister_id, autocomplete_employee_name_translations_path, :class => 'text-field' %>
+        <%= link_to '添加译员', new_employee_path, :class => 'button' %>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>润色：</label>
+        <%= f.text_field :embellisher, :class => 'text-field' %>
+        <%= link_to '添加润色', new_employee_path, :class => 'button' %>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>审稿：</label>
+        <%= f.text_field :reader, :class => 'text-field' %>
+        <%= link_to '添加审稿', new_employee_path, :class => 'button' %>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>编辑：</label>
+        <%= f.text_field :editor, :class => 'text-field' %>
+        <%= link_to '添加编辑', new_employee_path, :class => 'button' %>
+      </li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '修改', '#', :onclick => "submitForm('edit_translation_#{@translation.id}')", :class => 'button' %>
+      <%= link_to '返回', @translation, :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

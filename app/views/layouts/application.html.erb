@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head>
+    <title>翻译工作管理系统</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header"></div>
+      <div id="content">
+        <%= flash_tag %>
+        <%= yield %>
+      </div>
+      <div id="side">
+        <% if signined? %>
+          <h3>欢迎您，<%= user_name_in_session %></h3>
+          <ul>
+            <li><%= link_to "系统消息(#{@unread_notices_count})", @unread_notices_count > 0 ? unread_notices_path : notices_path %></li>
+            <li><%= link_to '修改密码', edit_password_users_path %></li>
+          </ul>
+          <h3>分类管理</h3>
+          <ul>
+            <li><%= link_to '添加分类', new_category_path %></li>
+            <li><%= link_to '分类列表', categories_path %></li>
+          </ul>
+          <h3>文档管理</h3>
+          <ul>
+            <%= permissable_for [User::ROLE_ADMIN] {"<li>#{link_to '全部中文文档列表', documents_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '添加中文文档', new_document_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER] {"<li>#{link_to '批量添加中文文档', batch_new_documents_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '已上传中文文档列表', uploaded_documents_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER] {"<li>#{link_to '批量指派中文文档', batch_assign_documents_path}</li>"} %>
+            <li><%= link_to '搜索外文文档', search_translations_path %></li>
+            <%= permissable_for [User::ROLE_HF_MANAGER] {"<li>#{link_to '待指派外文文档列表', generated_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_HF_MANAGER] {"<li>#{link_to '批量指派外文文档', batch_assign_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_HF_MANAGER, User::ROLE_ASSIGNEE] {"<li>#{link_to '待翻译外文文档列表', assigned_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_HF_MANAGER, User::ROLE_ASSIGNEE] {"<li>#{link_to '批量归档待翻译外文文档', batch_archive_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_HF_MANAGER, User::ROLE_ASSIGNEE] {"<li>#{link_to '已送翻外文文档列表', sent_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_HF_MANAGER, User::ROLE_ASSIGNEE] {"<li>#{link_to '批量上传翻译外文文档', batch_upload_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '待审核外文文档列表', translated_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '批量审核外文文档', batch_approve_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '已审核外文文档列表', approved_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '批量归档已审核外文文档', batch_archive_approved_translations_path}</li>"} %>
+            <li><%= link_to '已定稿外文文档列表', finished_translations_path %></li>
+          </ul>
+          <h3>雇员管理</h3>
+          <ul>
+            <li><%= link_to '添加雇员', new_employee_path %></li>
+            <li><%= link_to '雇员列表', employees_path %></li>
+          </ul>
+          <h3>用户管理</h3>
+          <ul>
+            <li><%= link_to '添加用户', new_user_path %></li>
+            <li><%= link_to '用户列表', users_path %></li>
+          </ul>
+          <h3>退出系统</h3>
+          <ul>
+            <li><%= link_to '注销', signout_path %></li>
+          </ul>
+        <% else %>
+          <h3>系统管理</h3>
+          <ul>
+            <li><%= link_to '用户登录', signin_path %></li>
+          </ul>
+        <% end %>
+      </div>
+      <div class="cb"></div>
+      <div id="footer">&copy; Copyright 2011 五洲汉风教育科技(北京)有限公司</div>
+    </div>
+  </body>
+</html>

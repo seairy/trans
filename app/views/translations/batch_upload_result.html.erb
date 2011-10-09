@@ -1,0 +1,10 @@
+<h1>批量上传翻译外文文档结果</h1>
+<p>以下<%= @unknown_files.size %>个文件未能成功上传：</p>
+<ul>
+  <% @unknown_files.each do |unknown_file| %>
+    <li><%= unknown_file %></li>
+  <% end %>
+</ul>
+<div class="operation-generic">
+  <%= link_to '返回', batch_upload_translations_path, :class => 'button' %>
+</div>

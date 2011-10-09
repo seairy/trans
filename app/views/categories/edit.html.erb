@@ -1,0 +1,16 @@
+<h1>编辑分类</h1>
+<%= form_for @category do |f| %>
+  <%= render "shared/error_messages", :target => @category %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>上级分类：</label><%= (%w/根目录/ << @category.ancestors.map{|n| n.name}).delete_if{|e| e.blank? }.join ' - ' %></li>
+    </ul>
+    <ul>
+      <li><label>名称：</label><%= f.text_field :name, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '修改', '#', :onclick => "submitForm('edit_category')", :class => 'button' %>
+      <%= link_to '分类列表', categories_path, :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

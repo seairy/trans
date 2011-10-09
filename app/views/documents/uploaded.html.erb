@@ -1,0 +1,22 @@
+<h1>已上传文档列表</h1>
+<table class="list-generic">
+  <tr>
+    <th>ID</th>
+    <th>分类</th>
+    <th>标题</th>
+    <th>操作</th>
+  </tr>
+  <% if @documents.blank? %>
+    <%= raw empty_record_tag %>
+  <% else %>
+    <% @documents.each_with_index do |document, index| %>
+      <tr class="<%= odevity_tag index %>">
+        <td><%= link_to document.id, document %></td>
+        <td><%= document.category.name %></td>
+        <td><%= document.title %></td>
+        <td><%= raw crud_for_list_tag(document) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<%= will_paginate @documents %>

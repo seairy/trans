@@ -1,0 +1,45 @@
+.cred {
+    color: red;
+}
+.cblue {
+    color: blue;
+}
+.cgreen {
+    color: green;
+}
+.fwn {
+    font-weight: normal;
+}
+.fwb {
+    font-weight: bold;
+}
+.tal {
+    text-align: left;
+}
+.tac {
+    text-align: center;
+}
+.tar {
+    text-align: right;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.cb {
+    clear: both;
+}
+.dn {
+    display: none;
+}
+.db {
+    display: block;
+}
+.di {
+    display: inline;
+}
+.dib {
+    display: inline-block;
+}

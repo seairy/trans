@@ -1,0 +1,234 @@
+/* standard elements */
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: #333;
+}
+h1, h2, h3 {
+    font-size: 14px;
+}
+h3 {
+	margin-bottom: 10px;
+}
+body {
+    background: #333 url(/assets/bg.gif);
+    color: #333;
+    font: normal 12px sans-serif;
+}
+#container {
+    margin: 20px auto;
+    padding: 13px;
+    width: 1000px;
+    background: #222;
+}
+#header {
+    height: 150px;
+    background: #F5F5F5 url(/assets/header.jpg) no-repeat;
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 150px;
+    text-align: center;
+}
+#content {
+    float: right;
+    padding: 20px;
+    border-left: 1px #000 solid;
+    width: 759px;
+    background: #F7F7F7;
+}
+#content h1 {
+    padding: 0 0 5px 24px;
+    margin-bottom: 10px;
+    border-bottom: 1px #AFAFAF solid;
+    background: url(/assets/arrow_double.gif) no-repeat;
+    color: #666;
+}
+#content h1 span {
+	float: right;
+}
+#content h1 span a {
+	text-decoration: none;
+}
+#content a {
+    color: #682;
+}
+#side {
+    float: left;
+    width: 200px;
+}
+#side h3 {
+    padding-left: 8px;
+    color: #FFE;
+    line-height: 28px;
+}
+#side ul li {
+    list-style: none;
+    border-bottom: 1px solid #696755;
+}
+#side ul li a {
+    display: block;
+    padding: 8px 0 8px 20px;
+    background: #89866F;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+}
+#side ul li a:hover {
+    background: #9C997C;
+}
+#footer {
+    background: url(/assets/footer_bg.gif) repeat-x;
+    color: #CCC;
+    font-size: 11px;
+    line-height: 39px;
+    text-align: center;
+}
+#signin {
+	
+}
+
+/* flash */
+p.notice {
+    padding: 7px 15px;
+    margin-bottom: 20px;
+    border: 2px solid #BD7;
+    background: #DF9;
+    font-size: 13px;
+    color: green;
+}
+
+p.alert {
+    background: #C00;
+    color: #FFF;
+}
+
+/* form */
+a.button {
+    display: inline-block;
+    height: 23px;
+    background: #EEE;
+    border: 1px #CCC solid;
+    padding: 0 4px;
+    line-height: 23px;
+    color: #444;
+    font-size: 13px;
+    text-decoration: none;
+}
+input.text-field {
+    width: 300px;
+    padding: 2px;
+    border: 1px #A7BEB7 solid;
+    background: #FFF;
+}
+input.medium {
+    width: 150px;
+}
+input.small {
+    width: 50px;
+}
+textarea.text-area {
+    width: 490px;
+    height: 120px;
+    padding: 2px;
+    border: 1px #AAA solid;
+}
+
+/* form generic */
+fieldset.form-generic {
+	border: 0;
+}
+fieldset.form-generic ul li {
+	padding: 4px 0;
+	list-style: none;
+}
+fieldset.form-generic ul li label {
+	display: inline-block;
+	width: 140px;
+}
+div.operation-generic {
+	padding: 10px 0;
+	text-align: center;
+}
+
+/* list generic */
+table.list-generic {
+	margin-bottom: 10px;
+    border: 1px solid #CCC;
+    border-collapse: collapse;
+    width: 100%;
+}
+table.list-generic th {
+    background: #DEE;
+    font-size: 13px;
+}
+table.list-generic tr.odd {
+    background: #FFF;
+}
+table.list-generic tr.even {
+    background: #F8F8F8;
+}
+table.list-generic td, table.list-generic th {
+    border: 1px solid #CCC;
+    padding: 3px 4px 3px 4px !important;
+    text-align: left;
+    vertical-align: bottom;
+}
+table.list-generic td.empty {
+    font-size: 13px;
+}
+
+/* sort generic */
+ul.sort-generic li {
+	padding: 8px;
+	list-style: none;
+}
+ul.sort-generic li span {
+	padding: 4px;
+	border: 1px #CCC solid;
+	cursor: pointer;
+}
+
+/* pagination */
+div.pagination {
+    clear: both;
+    padding: 2px 0;
+    line-height: 20px;
+}
+div.pagination a, div.pagination span.current, div.pagination span.disabled {
+    padding: 2px 5px;
+    margin-right: 2px;
+}
+div.pagination a {
+    border: 1px solid #AAD;
+    text-decoration: none;
+}
+div.pagination span.current {
+    border: 1px solid #999;
+    font-weight: bold;
+    background-color: #AAA;
+    color: #FFF;
+}
+div.pagination span.disabled {
+    border: 1px solid #999;
+}
+
+/* others */
+div.separator {
+	margin: 10px 0;
+	height: 0px;
+	border-top: 1px #999 solid;
+	border-bottom: 1px #CCC solid;
+}
+div.categories-list ul {
+	padding-left: 10px;
+	list-style: none;
+}
+div.categories-list li {
+	line-height: 22px;
+}
+div.languages {
+	margin-bottom: 10px;
+	line-height: 20px;
+}

@@ -1,0 +1,39 @@
+<h1>添加中文文档</h1>
+<%= form_for @document, :html => { :multipart => true } do |f| %>
+  <%= render "shared/error_messages", :target => @document %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>所属分类：</label><%= f.select :category_id, nested_set_options(Category, @document) {|i, level| "#{'-' * level} #{i.name}" } %></li>
+    </ul>
+    <ul>
+      <li><label>标题：</label><%= f.text_field :title, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li>
+        <label>优先级：</label>
+        <%= f.radio_button :priority, 1, :checked => true %> 一般
+        <%= f.radio_button :priority, 2 %> 紧急
+        <%= f.radio_button :priority, 3 %> 非常紧急
+      </li>
+    </ul>
+    <%#= permissable_for [User::ROLE_HF_MANAGER] do %>
+    <ul>
+      <li>
+        <div class="languages">
+          <%= raw all_languages.map {|l| "<span>#{check_box_tag 'language_ids[]', l.id} #{l.name}</span>"}.join ' ' %>
+        </div>
+        <%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'language_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'language_ids[]'); return false;" %> / <%= link_to '选择8种大语言', "javascript:selectPopularLanguages('language_ids[]'); return false;" %> / <%= link_to '选择36种小语言', "javascript:selectUnpopularLanguages('language_ids[]'); return false;" %>
+      </li>
+    </ul>
+    <%# end %>
+    <ul>
+      <li><label>上传稿件：</label><%= file_field_tag :uploaded_data, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li><label>字数统计：</label><%= f.text_field :word_count, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '添加', '#', :onclick => "submitForm('new_document')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

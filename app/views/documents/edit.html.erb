@@ -1,0 +1,29 @@
+<h1>编辑文档</h1>
+<%= form_for @document, :html => { :multipart => true } do |f| %>
+  <%= render "shared/error_messages", :target => @document %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>所属分类：</label><%= f.select :category_id, nested_set_options(Category) {|i, level| "#{'-' * level} #{i.name}" } %></li>
+    </ul>
+    <ul>
+      <li><label>标题：</label><%= f.text_field :title, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li>
+        <label>优先级：</label>
+        <%= f.radio_button :priority, 1, :checked => true %> 一般
+        <%= f.radio_button :priority, 2 %> 紧急
+        <%= f.radio_button :priority, 3 %> 非常紧急
+      </li>
+    </ul>
+    <ul>
+      <li><label>上传稿件：</label><%= file_field_tag :uploaded_data, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li><label>字数统计：</label><%= f.text_field :word_count, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '修改', '#', :onclick => "submitForm('edit_document_#{@document.id}')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

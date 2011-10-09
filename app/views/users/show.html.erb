@@ -1,0 +1,21 @@
+<h1>查看雇员</h1>
+<fieldset class="form-generic">
+  <ul>
+    <li><label>账号：</label><%= @user.account %></li>
+  </ul>
+  <ul>
+    <li><label>姓名：</label><%= @user.name %></li>
+  </ul>
+  <ul>
+    <li><label>角色：</label><%= human_user_role_for @user.role %></li>
+  </ul>
+  <ul>
+    <li><label>是否可用：</label><%= human_boolean_for !@user.prohibited? %></li>
+  </ul>
+  <ul>
+    <li><label>最后登录时间：</label><%= human_datetime_for @user.last_signined_at %></li>
+  </ul>
+  <div class="operation-generic">
+    <%= raw crud_for_show_tag(@user, :discard_destroy => true) %>
+  </div>
+</fieldset>

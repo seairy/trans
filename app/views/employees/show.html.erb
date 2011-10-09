@@ -1,0 +1,30 @@
+<h1>查看雇员</h1>
+<fieldset class="form-generic">
+  <ul>
+    <li><label>名称：</label><%= @employee.name %></li>
+  </ul>
+  <ul>
+    <li><label>角色：</label><%= human_employee_role_for @employee.role %></li>
+  </ul>
+  <ul>
+    <li><label>公司名称：</label><%= @employee.company_name %></li>
+  </ul>
+  <ul>
+    <li><label>职位：</label><%= @employee.title %></li>
+  </ul>
+  <ul>
+    <li><label>电话号码：</label><%= @employee.phone_number %></li>
+  </ul>
+  <ul>
+    <li><label>电子邮件：</label><%= @employee.email %></li>
+  </ul>
+  <ul>
+    <li><label>联系地址：</label><%= @employee.address %></li>
+  </ul>
+  <ul>
+    <li><label>邮政编码：</label><%= @employee.postal_code %></li>
+  </ul>
+  <div class="operation-generic">
+    <%= raw crud_for_show_tag(@employee) %>
+  </div>
+</fieldset>

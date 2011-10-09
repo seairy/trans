@@ -1,0 +1,11 @@
+<h1>搜索外文文档</h1>
+<%= form_tag search_translations_path, :method => :get, :id => 'search_translations' do %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>关键词：</label><%= text_field_tag :keywords, nil, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '搜索', '#', :onclick => "submitForm('search_translations')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

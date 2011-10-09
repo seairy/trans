@@ -1,0 +1,21 @@
+<h1>查看文档</h1>
+<fieldset class="form-generic">
+  <ul>
+    <li><label>分类：</label><%= (@document.category.ancestors.map{|n| n.name}).join ' - ' %></li>
+  </ul>
+  <ul>
+    <li><label>标题：</label><%= @document.title %></li>
+  </ul>
+  <ul>
+    <li><label>优先级：</label><%= human_priority_for @document.priority %></li>
+  </ul>
+  <ul>
+    <li><label>字数统计：</label><%= @document.word_count %></li>
+  </ul>
+  <ul>
+    <li><label>中文文稿：</label><%= link_to '点击下载', @document.file.uri, :blank => true %></li>
+  </ul>
+  <div class="operation-generic">
+    <%= raw crud_for_show_tag(@document) %>
+  </div>
+</fieldset>

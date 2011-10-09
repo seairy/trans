@@ -1,0 +1,26 @@
+<h1>用户列表<span><%= link_to '添加用户', new_user_path %></span></h1>
+<table class="list-generic">
+  <tr>
+    <th>ID</th>
+    <th>账号</th>
+    <th>姓名</th>
+    <th>角色</th>
+    <th>是否可用</th>
+    <th>操作</th>
+  </tr>
+  <% if @users.blank? %>
+    <%= raw empty_record_tag %>
+  <% else %>
+    <% @users.each_with_index do |user, index| %>
+      <tr class="<%= odevity_tag index %>">
+        <td><%= link_to user.id, user %></td>
+        <td><%= user.account %></td>
+        <td><%= user.name %></td>
+        <td><%= human_user_role_for user.role %></td>
+        <td><%= human_boolean_for !user.prohibited %></td>
+        <td><%= raw crud_for_list_tag(user, :discard_destroy => true) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<%= will_paginate @users %>

@@ -1,0 +1,11 @@
+<h1>批量添加中文文档</h1>
+<%= form_tag batch_create_documents_path, :id => 'batch_new_documents', :multipart => true do %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>RAR文件：</label><%= file_field_tag :file, :class => 'text-field' %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '批量添加', '#', :onclick => "submitForm('batch_new_documents')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>
