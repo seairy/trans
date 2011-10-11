@@ -1,4 +1,5 @@
 .bundle
+Capfile
 log/
 test/
 tmp/

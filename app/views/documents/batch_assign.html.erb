@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 </table>
-<%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'document_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'document_ids[]'); return false;" %>
+<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'document_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'document_ids[]'); return false;" %>
 <div class="separator"></div>
 <h3>选择优先级</h3>
 <%= radio_button_tag :priority, 1, :checked => true %> 一般
