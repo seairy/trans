@@ -20,7 +20,7 @@
     <% end %>
   <% end %>
 </table>
-<%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'translation_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'translation_ids[]'); return false;" %>
+<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'translation_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(false, 'translation_ids[]'); return false;" %>
 <div class="separator"></div>
 <%= link_to '批量归档', '#', :onclick => "submitForm('batch_archive')", :class => 'button' %>
 <% end %>

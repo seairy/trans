@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 </table>
-<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'document_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'document_ids[]'); return false;" %>
+<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'document_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(false, 'document_ids[]'); return false;" %>
 <div class="separator"></div>
 <h3>选择优先级</h3>
 <%= radio_button_tag :priority, 1, :checked => true %> 一般
@@ -29,7 +29,7 @@
 <div class="languages">
   <%= raw all_languages.map {|l| "<span>#{check_box_tag 'language_ids[]', l.id} #{l.name}</span>"}.join ' ' %>
 </div>
-<%= link_to '全选', "javascript:selectOrDeselectCheckbox(true, 'language_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:selectOrDeselectCheckbox(false, 'language_ids[]'); return false;" %> / <%= link_to '选择8种大语言', "javascript:selectPopularLanguages('language_ids[]'); return false;" %> / <%= link_to '选择36种小语言', "javascript:selectUnpopularLanguages('language_ids[]'); return false;" %>
+<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'language_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(false, 'language_ids[]'); return false;" %> / <%= link_to '选择8种大语言', "javascript:;", :onclick => "javascript:selectPopularLanguages('language_ids[]'); return false;" %> / <%= link_to '选择36种小语言', "javascript:;", :onclick => "javascript:selectUnpopularLanguages('language_ids[]'); return false;" %>
 <div class="separator"></div>
 <%= link_to '批量指派', '#', :onclick => "submitForm('batch_assign')", :class => 'button' %>
 <% end %>
