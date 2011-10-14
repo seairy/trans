@@ -58,7 +58,8 @@ class TranslationsController < ApplicationController
   
   def finished
     if user_role_in_session == User::ROLE_EDITOR
-      @translations = Translation.finished.owned_for(user_id_in_session).paginate :page => params[:page]
+      #@translations = Translation.finished.owned_for(user_id_in_session).paginate :page => params[:page]
+      @translations = Translation.finished.paginate :page => params[:page]
     elsif user_role_in_session == User::ROLE_ASSIGNEE
       @translations = Translation.finished.assigned_for(user_id_in_session).paginate :page => params[:page]
     else
@@ -131,11 +132,12 @@ class TranslationsController < ApplicationController
   end
   
   def batch_archive_approved
-    if user_role_in_session == User::ROLE_EDITOR
-      @translations = Translation.approved.owned_for user_id_in_session
-    else
-      @translations = Translation.approved
-    end
+    #if user_role_in_session == User::ROLE_EDITOR
+    #  @translations = Translation.approved.owned_for user_id_in_session
+    #else
+    #  @translations = Translation.approved
+    #end
+    @translations = Translation.approved
     if request.post?
       if params[:translation_ids].blank?
         redirect_to batch_archive_translations_path, :alert => '操作失败，请至少选择一个外文文档！'
