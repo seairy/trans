@@ -114,11 +114,12 @@ class TranslationsController < ApplicationController
   end
   
   def batch_approve
-    if user_role_in_session == User::ROLE_EDITOR
-      @translations = Translation.translated.owned_for user_id_in_session
-    else
-      @translations = Translation.translated
-    end
+    #if user_role_in_session == User::ROLE_EDITOR
+    #  @translations = Translation.translated.owned_for user_id_in_session
+    #else
+    #  @translations = Translation.translated
+    #end
+    @translations = Translation.translated
     if request.post?
       if params[:translation_ids].blank?
         redirect_to batch_approve_translations_path, :alert => '操作失败，请至少选择一个外文文档！'
