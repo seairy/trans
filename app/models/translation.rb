@@ -18,8 +18,8 @@ class Translation < ActiveRecord::Base
   scope :translated, where(:state => STATE_TRANSLATED).includes(:document).includes(:language).includes(:file).includes(:assignee)
   scope :approved, where(:state => STATE_APPROVED).includes(:document).includes(:language).includes(:file).includes(:assignee)
   scope :finished, where(:state => STATE_FINISHED).includes(:document).includes(:language).includes(:file).includes(:assignee)
-  scope :owned_for, lambda {|owner| where(owner:owner)}
-  scope :assigned_for, lambda {|assignee| where(assignee:assignee)}
+  scope :owned_for, lambda {|owner| where(owner_id:owner)}
+  scope :assigned_for, lambda {|assignee| where(assignee_id:assignee)}
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   scope :translated_at, includes(:operations).where('operations.action = ?', Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
   
