@@ -1,0 +1,22 @@
+<h1>编辑用户</h1>
+<%= form_for @user do |f| %>
+  <%= render "shared/error_messages", :target => @user %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>账号：</label><%= @user.account %></li>
+    </ul>
+    <ul>
+      <li><label>姓名：</label><%= f.text_field :name, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li><label>角色：</label><%= f.select :role, user_role_options_for_select(:selected => @user.role) %></li>
+    </ul>
+    <ul>
+      <li><label>禁用该账号：</label><%= f.check_box :prohibited %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '修改', '#', :onclick => "submitForm('edit_user_#{@user.id}')", :class => 'button' %>
+      <%= link_to '用户列表', users_path, :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>
