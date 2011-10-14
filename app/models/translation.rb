@@ -21,7 +21,10 @@ class Translation < ActiveRecord::Base
   scope :owned_for, lambda {|owner| where(owner_id:owner)}
   scope :assigned_for, lambda {|assignee| where(assignee_id:assignee)}
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
-  scope :translated_at, includes(:operations).where('operations.action = ?', Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
+  
+  def translated_at
+    includes(:operations).where('operations.action = ?', Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
+  end
   
   class << self
     def batch_assign user_id, translation_ids, assignee_id
