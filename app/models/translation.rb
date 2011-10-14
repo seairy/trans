@@ -16,18 +16,34 @@ class Translation < ActiveRecord::Base
     end
   end
   has_many :comments
-  scope :generated, where(:state => STATE_GENERATED).includes(:document).includes(:language)
-  scope :assigned, where(:state => STATE_ASSIGNED).includes(:document).includes(:language).includes(:assignee)
-  scope :sent, where(:state => STATE_SENT).includes(:document).includes(:language).includes(:assignee)
-  scope :translated, where(:state => STATE_TRANSLATED).includes(:document).includes(:language).includes(:file).includes(:assignee)
-  scope :approved, where(:state => STATE_APPROVED).includes(:document).includes(:language).includes(:file).includes(:assignee)
-  scope :finished, where(:state => STATE_FINISHED).includes(:document).includes(:language).includes(:file).includes(:assignee)
+  scope :generated, where(:state => STATE_GENERATED).order('updated_at DESC, id DESC').includes(:document).includes(:language)
+  scope :assigned, where(:state => STATE_ASSIGNED).order('updated_at DESC, id DESC').includes(:document).includes(:language).includes(:assignee)
+  scope :sent, where(:state => STATE_SENT).order('updated_at DESC, id DESC').includes(:document).includes(:language).includes(:assignee)
+  scope :translated, where(:state => STATE_TRANSLATED).order('updated_at DESC, id DESC').includes(:document).includes(:language).includes(:file).includes(:assignee)
+  scope :approved, where(:state => STATE_APPROVED).order('updated_at DESC, id DESC').includes(:document).includes(:language).includes(:file).includes(:assignee)
+  scope :finished, where(:state => STATE_FINISHED).order('updated_at DESC, id DESC').includes(:document).includes(:language).includes(:file).includes(:assignee)
   scope :owned_for, lambda {|owner| where(owner_id:owner)}
   scope :assigned_for, lambda {|assignee| where(assignee_id:assignee)}
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   
+  def sent_at
+    o = operations.where(action:Operation::ACTION_ARCHIVE_AND_SENT).first
+    o.created_at unless o.blank?
+  end
+  
   def translated_at
-    operations.where(action:Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first.created_at
+    o = operations.where(action:Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
+    o.created_at unless o.blank?
+  end
+  
+  def approved_at
+    o = operations.where(action:Operation::ACTION_APPROVED).first.
+    o.created_at unless o.blank?
+  end
+  
+  def finished_at
+    o = operations.where(action:Operation::ACTION_ARCHIVE_AND_FINISH).first
+    o.created_at unless o.blank?
   end
   
   class << self
