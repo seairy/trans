@@ -10,7 +10,11 @@ class Translation < ActiveRecord::Base
   belongs_to :embellisher, :class_name => 'Employee'
   belongs_to :reader, :class_name => 'Employee'
   belongs_to :editor, :class_name => 'Employee'
-  has_many :operations
+  has_many :operations do
+    def ordered
+      order('created_at ASC')
+    end
+  end
   has_many :comments
   scope :generated, where(:state => STATE_GENERATED).includes(:document).includes(:language)
   scope :assigned, where(:state => STATE_ASSIGNED).includes(:document).includes(:language).includes(:assignee)
@@ -23,7 +27,7 @@ class Translation < ActiveRecord::Base
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   
   def translated_at
-    includes(:operations).where('operations.action = ?', Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
+    operations.where(action:Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
   end
   
   class << self

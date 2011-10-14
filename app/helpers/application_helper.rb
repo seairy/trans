@@ -109,6 +109,17 @@ module ApplicationHelper
     end
   end
   
+  def human_operation_action_for operation_action
+    case operation_action
+    when Operation::ACTION_GENERATE then '生成'
+    when Operation::ACTION_ASSIGN then '指派'
+    when Operation::ACTION_ARCHIVE_AND_SENT then '归档及送翻'
+    when Operation::ACTION_UPLOAD_AND_TRANSLATE then '回稿及上传'
+    when Operation::ACTION_APPROVE then '审核'
+    when Operation::ACTION_ARCHIVE_AND_FINISH then '归档及定稿'
+    end
+  end
+  
   def user_role_options_for_select options = {}
     user_role_options = {}
     user_role_options.merge!({ '管理员' => User::ROLE_ADMIN }) if [User::ROLE_ADMIN].include? user_role_in_session

@@ -34,6 +34,13 @@
     <li><label>编辑：</label><%= @translation.editor.name unless @translation.editor.blank? %></li>
   </ul>
 </fieldset>
+<div class="separator"></div>
+<ul class="operations">
+  <% @translation.operations.ordered.each do |operation| %>
+    <li><%= operation.user.name %> 于 <%= human_datetime_for operation.created_at %> 进行了 <%= human_operation_action_for operation.action %> 操作</li>
+  <% end %>
+</ul>
+<div class="separator"></div>
 <ul class="comments">
   <% @translation.comments.each do |comment| %>
     <li><%= comment.user.name %> 在 <%= human_datetime_for comment.created_at %> 说：<%= comment.content %></li>
