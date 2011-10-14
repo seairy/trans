@@ -103,7 +103,7 @@ class Translation < ActiveRecord::Base
       result = result.includes(:document).where(:'documents.category_id' => category_id) unless category_id.blank?
       result = result.includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%") unless keywords.blank?
       unless language_ids.blank?
-        result = result.includes(:language).where(id:language_ids)
+        result = result.includes(:language).where(:'languages.id' => language_ids)
       end
       if Date.valid_civil?(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i)
         result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at >= ?', Date.new(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i).at_beginning_of_day)
