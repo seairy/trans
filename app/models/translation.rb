@@ -10,6 +10,7 @@ class Translation < ActiveRecord::Base
   belongs_to :embellisher, :class_name => 'Employee'
   belongs_to :reader, :class_name => 'Employee'
   belongs_to :editor, :class_name => 'Employee'
+  has_many :operations
   has_many :comments
   scope :generated, where(:state => STATE_GENERATED).includes(:document).includes(:language)
   scope :assigned, where(:state => STATE_ASSIGNED).includes(:document).includes(:language).includes(:assignee)
@@ -20,6 +21,7 @@ class Translation < ActiveRecord::Base
   scope :owned_for, lambda {|owner| where(owner:owner)}
   scope :assigned_for, lambda {|assignee| where(assignee:assignee)}
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
+  scope :translated_at, includes(:operations).where('operations.action = ?', Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
   
   class << self
     def batch_assign user_id, translation_ids, assignee_id
@@ -91,6 +93,22 @@ class Translation < ActiveRecord::Base
           Operation.create({ :translation_id => translation.id, :user_id => user_id, :action => Operation::ACTION_APPROVE })
         end
       end
+    end
+    
+    def search_approved category_id, keywords, language_ids, date_range
+      result = where(state:STATE_APPROVED)
+      result = result.includes(:document).where(:'documents.category_id' => category_id) unless category_id.blank?
+      result = result.includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%") unless keywords.blank?
+      unless language_ids.blank?
+        result = result.includes(:language).where(id:language_ids)
+      end
+      if Date.valid_civil?(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at >= ?', Date.new(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i).at_beginning_of_day)
+      end
+      if Date.valid_civil?(date_range[:'end(1i)'].to_i,date_range[:'end(2i)'].to_i,date_range[:'end(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at <= ?', Date.new(date_range[:'end(1i)'].to_i,date_range[:'end(2i)'].to_i,date_range[:'end(3i)'].to_i))
+      end
+      result
     end
   end
 end

@@ -1,0 +1,26 @@
+<h1>搜索已审核外文文档</h1>
+<%= form_tag search_approved_translations_path, :id => 'search_approved_translations' do %>
+  <fieldset class="form-generic">
+    <ul>
+      <li><label>所属分类：</label><%= select_tag :category_id, options_for_select(nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" } ), :prompt => '不限' %></li>
+    </ul>
+    <ul>
+      <li><label>关键词：</label><%= text_field_tag :keywords, nil, :class => 'text-field' %></li>
+    </ul>
+    <ul>
+      <li>
+        <label>翻译语种：</label>
+        <div class="languages">
+          <%= raw all_languages.map {|l| "<span>#{check_box_tag 'language_ids[]', l.id} #{l.name}</span>"}.join ' ' %>
+          <div class="action"><%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'language_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(false, 'language_ids[]'); return false;" %> / <%= link_to '选择8种大语言', "javascript:;", :onclick => "javascript:selectPopularLanguages('language_ids[]'); return false;" %> / <%= link_to '选择36种小语言', "javascript:;", :onclick => "javascript:selectUnpopularLanguages('language_ids[]'); return false;" %></div>
+        </div>
+        </li>
+    </ul>
+    <ul>
+      <li><label>译稿提交日期：</label><%= date_select :date_range, :begin, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %> 至 <%= date_select :date_range, :end, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %></li>
+    </ul>
+    <div class="operation-generic">
+      <%= link_to '搜索', '#', :onclick => "submitForm('search_approved_translations')", :class => 'button' %>
+    </div>
+  </fieldset>
+<% end %>

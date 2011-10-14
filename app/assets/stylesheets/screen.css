@@ -214,6 +214,24 @@ div.pagination span.disabled {
     border: 1px solid #999;
 }
 
+/* form signin */
+fieldset.signin {
+	margin: 0 auto;
+	border: 0;
+	width: 400px;
+}
+fieldset.signin ul li {
+	padding: 4px 0;
+	list-style: none;
+}
+fieldset.signin ul li label {
+	display: inline-block;
+	width: 60px;
+}
+fieldset.signin ul li input.text-field {
+	width: 300p;
+}
+
 /* others */
 div.separator {
 	margin: 10px 0;
@@ -226,9 +244,17 @@ div.categories-list ul {
 	list-style: none;
 }
 div.categories-list li {
-	line-height: 22px;
+	line-height: 30px;
+}
+div.categories-list li span {
+	padding: 4px;
+	border: 1px solid #AAA;
+	background: #DDD;
+}
+div.categories-list li span a {
+	text-decoration: none;
 }
 div.languages {
-	margin-bottom: 10px;
+	margin: 10px 0;
 	line-height: 20px;
 }

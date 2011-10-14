@@ -1,11 +1,14 @@
+<h1>用户登录</h1>
 <%= form_tag signin_path, :id => 'signin' do %>
   <fieldset class="signin">
     <ul>
-      <li><label>帐号:</label><%= text_field_tag :account %></li>
+      <li><label>帐号:</label><%= text_field_tag :account, nil, :class => 'text-field' %></li>
     </ul>
     <ul>
-      <li><label>密码:</label><%= password_field_tag :password %></li>
+      <li><label>密码:</label><%= password_field_tag :password, nil, :class => 'text-field' %></li>
     </ul>
-    <%= submit_tag 'signin' %>
+    <div class="operation-generic">
+      <%= link_to '登录', '#', :onclick => "submitForm('signin')", :class => 'button' %>
+    </div>
   </fieldset>
 <% end %>

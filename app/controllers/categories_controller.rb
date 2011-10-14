@@ -5,6 +5,10 @@ class CategoriesController < ApplicationController
     @categories = Category.arrange
   end
   
+  def show
+    @category = Category.find(params[:id])
+  end
+  
   def new
     @category = Category.new
   end
@@ -33,8 +37,15 @@ class CategoriesController < ApplicationController
   
   def destroy
     @category = Category.find(params[:id])
-    @category.destroy
-    redirect_to(categories_url)
+    if @category.children.size > 0
+      flash[:alert] = '该分类下存在子分类，请先删除所有子分类后重试！'
+    elsif !@category.documents.blank?
+      flash[:alert] = '该分类下存在文档，请先删除或移动所有文档后重试！'
+    else
+      @category.destroy
+      flash[:notice] = '删除成功'
+    end
+    redirect_to(categories_path)
   end
 end
 

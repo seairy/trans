@@ -42,6 +42,7 @@
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '待审核外文文档列表', translated_translations_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '批量审核外文文档', batch_approve_translations_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '已审核外文文档列表', approved_translations_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '搜索已审核外文文档', search_approved_translations_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '批量归档已审核外文文档', batch_archive_approved_translations_path}</li>"} %>
             <li><%= link_to '已定稿外文文档列表', finished_translations_path %></li>
           </ul>

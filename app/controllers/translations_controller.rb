@@ -151,4 +151,11 @@ class TranslationsController < ApplicationController
       render 'search_result'
     end
   end
+  
+  def search_approved
+    if request.post?
+      @translations = Translation.search_approved(params[:category_id], params[:keywords], params[:language_ids], params[:date_range])
+      render 'search_approved_result'
+    end
+  end
 end
