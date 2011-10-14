@@ -27,7 +27,7 @@ class Translation < ActiveRecord::Base
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   
   def translated_at
-    operations.where(action:Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first
+    operations.where(action:Operation::ACTION_UPLOAD_AND_TRANSLATE).order('operations.created_at DESC').first.created_at
   end
   
   class << self
