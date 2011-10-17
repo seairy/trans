@@ -27,7 +27,7 @@ class Translation < ActiveRecord::Base
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   
   def assigned_at
-    o = operations.where(action:Operation::ACTION_ASSIGNED).first
+    o = operations.where(action:Operation::ACTION_ASSIGN).first
     o.created_at unless o.blank?
   end
   
