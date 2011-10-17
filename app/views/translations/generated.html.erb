@@ -1,4 +1,4 @@
-<h1>待指派外文文档列表</h1>
+<h1>待指派外文文档列表<span><%= link_to '高级搜索', search_generated_translations_path %></span></h1>
 <table class="list-generic">
   <tr>
     <th>ID</th>
@@ -12,7 +12,7 @@
     <% @translations.each_with_index do |translation, index| %>
       <tr class="<%= odevity_tag index %>">
         <td><%= link_to translation.id, translation %></td>
-        <td><%= translation.category.name %></td>
+        <td><%= translation.document.category.name %></td>
         <td><%= translation.document.title %></td>
         <td><%= translation.language.name %></td>
       </tr>

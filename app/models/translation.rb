@@ -118,18 +118,24 @@ class Translation < ActiveRecord::Base
       end
     end
     
-    def search_approved category_id, keywords, language_ids, date_range
-      result = where(state:STATE_APPROVED)
-      result = result.includes(:document).where(:'documents.category_id' => category_id) unless category_id.blank?
-      result = result.includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%") unless keywords.blank?
-      unless language_ids.blank?
-        result = result.includes(:language).where(:'languages.id' => language_ids)
-      end
-      if Date.valid_civil?(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i)
-        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at >= ?', Date.new(date_range[:'begin(1i)'].to_i,date_range[:'begin(2i)'].to_i,date_range[:'begin(3i)'].to_i).at_beginning_of_day)
-      end
-      if Date.valid_civil?(date_range[:'end(1i)'].to_i,date_range[:'end(2i)'].to_i,date_range[:'end(3i)'].to_i)
-        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at <= ?', Date.new(date_range[:'end(1i)'].to_i,date_range[:'end(2i)'].to_i,date_range[:'end(3i)'].to_i))
+    def advanced_search state, options = {}
+      result = where(state:state)
+      result = result.includes(:document).where(:'documents.category_id' => options[:category_id]) unless options[:category_id].blank?
+      result = result.includes(:document).where('translations.id = ? OR documents.title LIKE ?', options[:keywords], "%#{options[:keywords]}%") unless options[:keywords].blank?
+      result = result.includes(:language).where(:'languages.id' => options[:language_ids]) unless options[:language_ids].blank?
+      case state
+      when STATE_GENERATED
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_GENERATE).where('operations.created_at >= ?', Date.new(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i).at_beginning_of_day) if Date.valid_civil?(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_GENERATE).where('operations.created_at <= ?', Date.new(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)) if Date.valid_civil?(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)
+      when STATE_ASSIGNED
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_ASSIGN).where('operations.created_at >= ?', Date.new(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i).at_beginning_of_day) if Date.valid_civil?(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_ASSIGN).where('operations.created_at <= ?', Date.new(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)) if Date.valid_civil?(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)
+      when STATE_APPROVED
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at >= ?', Date.new(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i).at_beginning_of_day) if Date.valid_civil?(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_UPLOAD_AND_TRANSLATE).where('operations.created_at <= ?', Date.new(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)) if Date.valid_civil?(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)
+      when STATE_FINISHED
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_ARCHIVE_AND_FINISH).where('operations.created_at >= ?', Date.new(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i).at_beginning_of_day) if Date.valid_civil?(options[:date_range][:'begin(1i)'].to_i,options[:date_range][:'begin(2i)'].to_i,options[:date_range][:'begin(3i)'].to_i)
+        result = result.includes(:operations).where(:'operations.action' => Operation::ACTION_ARCHIVE_AND_FINISH).where('operations.created_at <= ?', Date.new(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)) if Date.valid_civil?(options[:date_range][:'end(1i)'].to_i,options[:date_range][:'end(2i)'].to_i,options[:date_range][:'end(3i)'].to_i)
       end
       result
     end

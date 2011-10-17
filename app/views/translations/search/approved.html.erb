@@ -17,7 +17,7 @@
         </li>
     </ul>
     <ul>
-      <li><label>译稿提交日期：</label><%= date_select :date_range, :begin, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %> 至 <%= date_select :date_range, :end, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %></li>
+      <li><label>最终回稿时间：</label><%= date_select :date_range, :begin, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %> 至 <%= date_select :date_range, :end, :use_month_numbers => true, :start_year => 2011, :prompt => { :year => '年', :month => '月', :day => '日' } %></li>
     </ul>
     <div class="operation-generic">
       <%= link_to '搜索', '#', :onclick => "submitForm('search_approved_translations')", :class => 'button' %>

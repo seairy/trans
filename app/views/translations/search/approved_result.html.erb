@@ -1,0 +1,29 @@
+<h1>搜索已审核外文文档结果<span><%= link_to '重新搜索', search_approved_translations_path %></span></h1>
+<%= form_tag batch_archive_translations_path, :id => 'batch_archive' do %>
+<%= hidden_field_tag 'searched', nil, :value => true %>
+<table class="list-generic">
+  <tr>
+    <th>&nbsp;</th>
+    <th>所属分类</th>
+    <th>中文文档标题</th>
+    <th>翻译语言</th>
+    <th>最终回稿时间</th>
+  </tr>
+  <% if @translations.blank? %>
+    <%= raw empty_record_tag %>
+  <% else %>
+    <% @translations.each_with_index do |translation, index| %>
+      <tr class="<%= odevity_tag index %>">
+        <td><%= check_box_tag 'translation_ids[]', translation.id %></td>
+        <td><%= translation.document.category.name %></td>
+        <td><%= translation.document.title %></td>
+        <td><%= translation.language.name %></td>
+        <td><%= human_datetime_for translation.translated_at %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<%= link_to '全选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(true, 'translation_ids[]'); return false;" %> / <%= link_to '全不选', "javascript:;", :onclick => "javascript:selectOrDeselectCheckbox(false, 'translation_ids[]'); return false;" %>
+<div class="separator"></div>
+<%= link_to '批量归档', '#', :onclick => "submitForm('batch_archive')", :class => 'button' %>
+<% end %>

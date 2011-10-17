@@ -58,7 +58,6 @@ class TranslationsController < ApplicationController
   
   def finished
     if user_role_in_session == User::ROLE_EDITOR
-      #@translations = Translation.finished.owned_for(user_id_in_session).paginate :page => params[:page]
       @translations = Translation.finished.paginate :page => params[:page]
     elsif user_role_in_session == User::ROLE_ASSIGNEE
       @translations = Translation.finished.assigned_for(user_id_in_session).paginate :page => params[:page]
@@ -70,13 +69,14 @@ class TranslationsController < ApplicationController
   def batch_assign
     @translations = Translation.generated
     if request.post?
+      path = params[:searched] ? search_generated_translations_path : batch_assign_translations_path
       if params[:translation_ids].blank?
-        redirect_to batch_assign_translations_path, :alert => '操作失败，请至少选择一个外文文档！'
+        redirect_to path, :alert => '操作失败，请至少选择一个外文文档！'
       elsif params[:assignee_id].blank?
-        redirect_to batch_assign_translations_path, :alert => '操作失败，请选择指派人！'
+        redirect_to path, :alert => '操作失败，请选择指派人！'
       else
         Translation.batch_assign user_id_in_session, params[:translation_ids], params[:assignee_id]
-        redirect_to batch_assign_translations_path, :notice => '批量指派成功'
+        redirect_to path, :notice => '批量指派成功'
       end
     end
   end
@@ -89,7 +89,7 @@ class TranslationsController < ApplicationController
     end
     if request.post?
       if params[:translation_ids].blank?
-        redirect_to batch_archive_translations_path, :alert => '操作失败，请至少选择一个外文文档！'
+        redirect_to (params[:searched] ? search_assigned_translations_path : batch_archive_translations_path), :alert => '操作失败，请至少选择一个外文文档！'
       else
         archive_name = Translation.batch_archive user_id_in_session, params[:translation_ids]
         send_file "#{::Rails.root.to_s}/public/archives/#{archive_name}", :filename => archive_name, :type => 'application/octet-stream'
@@ -115,11 +115,6 @@ class TranslationsController < ApplicationController
   end
   
   def batch_approve
-    #if user_role_in_session == User::ROLE_EDITOR
-    #  @translations = Translation.translated.owned_for user_id_in_session
-    #else
-    #  @translations = Translation.translated
-    #end
     @translations = Translation.translated
     if request.post?
       if params[:translation_ids].blank?
@@ -132,15 +127,10 @@ class TranslationsController < ApplicationController
   end
   
   def batch_archive_approved
-    #if user_role_in_session == User::ROLE_EDITOR
-    #  @translations = Translation.approved.owned_for user_id_in_session
-    #else
-    #  @translations = Translation.approved
-    #end
     @translations = Translation.approved
     if request.post?
       if params[:translation_ids].blank?
-        redirect_to batch_archive_translations_path, :alert => '操作失败，请至少选择一个外文文档！'
+        redirect_to (params[:searched] ? search_approved_translations_path : batch_archive_translations_path), :alert => '操作失败，请至少选择一个外文文档！'
       else
         archive_name = Translation.batch_archive user_id_in_session, params[:translation_ids]
         send_file "#{::Rails.root.to_s}/public/archives/#{archive_name}", :filename => archive_name, :type => 'application/octet-stream'
@@ -155,10 +145,30 @@ class TranslationsController < ApplicationController
     end
   end
   
+  def search_generated
+    if request.get?
+      render 'translations/search/generated'
+    else
+      @translations = Translation.advanced_search Translation::STATE_GENERATED, params
+      render 'translations/search/generated_result'
+    end
+  end
+  
+  def search_assigned
+    if request.get?
+      render 'translations/search/assigned'
+    else
+      @translations = Translation.advanced_search Translation::STATE_ASSIGNED, params
+      render 'translations/search/assigned_result'
+    end
+  end
+  
   def search_approved
-    if request.post?
-      @translations = Translation.search_approved(params[:category_id], params[:keywords], params[:language_ids], params[:date_range])
-      render 'search_approved_result'
+    if request.get?
+      render 'translations/search/approved'
+    else
+      @translations = Translation.advanced_search Translation::STATE_ASSIGNED, params
+      render 'translations/search/approved_result'
     end
   end
 end
