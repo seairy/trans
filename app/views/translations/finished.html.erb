@@ -18,7 +18,7 @@
         <td><%= translation.document.title %></td>
         <td><%= translation.language.name %></td>
         <td><%= translation.assignee.name %></td>
-        <td><%= translation.finished_at %></td>
+        <td><%= human_datetime_for translation.finished_at %></td>
       </tr>
     <% end %>
   <% end %>
