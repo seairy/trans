@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   before_create :generate_hashed_password
   validates_presence_of :account, :password, :password_confirmation, :on => :create
-  validates_length_of :account, :password, :password_confirmation,:in => 6..16, :on => :create
+  validates_length_of :account, :password, :password_confirmation,:in => 4..16, :on => :create
   validates_uniqueness_of :account, :on => :create
   validates_confirmation_of :password, :on => :create
   scope :editors, where(role:ROLE_EDITOR)
