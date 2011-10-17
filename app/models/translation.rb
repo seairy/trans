@@ -26,6 +26,11 @@ class Translation < ActiveRecord::Base
   scope :assigned_for, lambda {|assignee| where(assignee_id:assignee)}
   scope :search, lambda {|keywords| includes(:document).where('translations.id = ? OR documents.title LIKE ?', keywords, "%#{keywords}%")}
   
+  def assigned_at
+    o = operations.where(action:Operation::ACTION_ASSIGNED).first
+    o.created_at unless o.blank?
+  end
+  
   def sent_at
     o = operations.where(action:Operation::ACTION_ARCHIVE_AND_SENT).first
     o.created_at unless o.blank?
