@@ -16,7 +16,7 @@
     <li><label>状态：</label><%= human_translation_state_for @translation.state %></li>
   </ul>
   <ul>
-    <li><label>原始中文文档：</label><%= link_to '点击下载', @translation.document.file %></li>
+    <li><label>原始中文文档：</label><%= link_to '点击下载', @translation.document.file.uri %></li>
   </ul>
   <ul>
     <li><label>翻译文档：</label><%= link_to '点击下载', @translation.file.uri unless @translation.file.blank? %></li>
