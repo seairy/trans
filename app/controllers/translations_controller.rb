@@ -167,7 +167,7 @@ class TranslationsController < ApplicationController
     if request.get?
       render 'translations/search/approved'
     else
-      @translations = Translation.advanced_search Translation::STATE_ASSIGNED, params
+      @translations = Translation.advanced_search Translation::STATE_APPROVED, params
       render 'translations/search/approved_result'
     end
   end

@@ -2,9 +2,9 @@
 <table class="list-generic">
   <tr>
     <th>ID</th>
-    <th>分类</th>
-    <th>标题</th>
-    <th>操作</th>
+    <th>所属分类</th>
+    <th>中文文档标题</th>
+    <th>创建时间</th>
   </tr>
   <% if @documents.blank? %>
     <%= raw empty_record_tag %>
@@ -14,7 +14,7 @@
         <td><%= link_to document.id, document %></td>
         <td><%= document.category.name %></td>
         <td><%= document.title %></td>
-        <td><%= raw crud_for_list_tag(document) %></td>
+        <td><%= human_datetime_for document.created_at %></td>
       </tr>
     <% end %>
   <% end %>

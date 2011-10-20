@@ -125,7 +125,10 @@ class Translation < ActiveRecord::Base
     
     def advanced_search state, options = {}
       result = where(state:state)
-      result = result.includes(:document).where(:'documents.category_id' => options[:category_id]) unless options[:category_id].blank?
+      unless options[:category_id].blank?
+        category = Category.find(options[:category_id])
+        result = result.includes(:document).where(:'documents.category_id' => ([category.id] << category.descendants.all.collect{|c| c.id}).delete_if{|e| e.blank?})
+      end
       result = result.includes(:document).where('translations.id = ? OR documents.title LIKE ?', options[:keywords], "%#{options[:keywords]}%") unless options[:keywords].blank?
       result = result.includes(:language).where(:'languages.id' => options[:language_ids]) unless options[:language_ids].blank?
       case state
