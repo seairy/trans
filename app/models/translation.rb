@@ -42,7 +42,7 @@ class Translation < ActiveRecord::Base
   end
   
   def approved_at
-    o = operations.where(action:Operation::ACTION_APPROVED).first.
+    o = operations.where(action:Operation::ACTION_APPROVE).first
     o.created_at unless o.blank?
   end
   
