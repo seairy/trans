@@ -27,10 +27,10 @@
           </ul>
           <h3>文档管理</h3>
           <ul>
-            <%= permissable_for [User::ROLE_ADMIN] {"<li>#{link_to '全部中文文档列表', documents_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '中文文档列表', documents_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '添加中文文档', new_document_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER] {"<li>#{link_to '批量添加中文文档', batch_new_documents_path}</li>"} %>
-            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '已上传中文文档列表', uploaded_documents_path}</li>"} %>
+            <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '待指派中文文档列表', uploaded_documents_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER] {"<li>#{link_to '批量指派中文文档', batch_assign_documents_path}</li>"} %>
             <li><%= link_to '搜索外文文档', search_translations_path %></li>
             <li><%= link_to '待指派外文文档列表', generated_translations_path %></li>

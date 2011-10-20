@@ -1,4 +1,4 @@
-<h1>查看文档<span><%= link_to '编辑', edit_translation_path(@translation) %></span></h1>
+<h1>查看文档<span><%= raw([permissable_for([User::ROLE_HF_MANAGER]){"#{link_to '编辑', edit_translation_path(@translation)}"}, permissable_for([User::ROLE_CIO_MANAGER]){"#{link_to '编辑中文文档', edit_document_path(@translation.document)}"}].join ' | ') %></span></h1>
 <fieldset class="form-generic">
   <ul>
     <li><label>所属分类：</label><%= @translation.document.category.ancestors.map{|n| n.name}.join '-' %></li>

@@ -70,8 +70,12 @@ class DocumentsController < ApplicationController
   
   def destroy
     @document = Document.find(params[:id])
-    @document.destroy
-    redirect_to(documents_url)
+    if @document.translations.size > 0
+      redirect_to @document, :alert => "该文档已进行#{@document.translations.collect{|t| t.language.name}.join '、'}翻译，请先删除以上文档后再试！"
+    else
+      @category.destroy
+      redirect_to documents_path, :notice => '删除成功'
+    end
   end
   
   def uploaded
@@ -110,7 +114,8 @@ class DocumentsController < ApplicationController
           asset = Asset.new.prepare({ :stream => file.read, :original_filename => path, :content_type => 'application/msword', :size => file.size })
           asset.save
           document_title = path.gsub(/\.\w+$/, '')
-          Document.create({ :category_id => @categories_list.blank? ? nil : @categories_list.last[:id], :uploader_id => user_id_in_session, :file => asset, :title => document_title, :priority => 0, :state => Document::STATE_UPLOADED })
+          word_count = (title.scan(/_(\d+)\./)[0][0] unless title.scan(/_(\d+)\./).blank?) || 0
+          Document.create({ :category_id => @categories_list.blank? ? nil : @categories_list.last[:id], :uploader_id => user_id_in_session, :file => asset, :title => document_title, :word_count => word_count, :priority => 0, :state => Document::STATE_UPLOADED })
         end
       end
     end

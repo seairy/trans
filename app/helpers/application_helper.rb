@@ -79,6 +79,10 @@ module ApplicationHelper
     end
   end
   
+  def human_word_count_for word_count
+    word_count || '未统计'
+  end
+  
   def human_user_role_for user_role
     case user_role
     when User::ROLE_ADMIN then '管理员'

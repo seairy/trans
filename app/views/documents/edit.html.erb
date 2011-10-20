@@ -24,6 +24,7 @@
     </ul>
     <div class="operation-generic">
       <%= link_to '修改', '#', :onclick => "submitForm('edit_document_#{@document.id}')", :class => 'button' %>
+      <%= link_to '返回', @document, :class => 'button' %>
     </div>
   </fieldset>
 <% end %>

@@ -142,6 +142,7 @@ fieldset.form-generic {
 fieldset.form-generic ul li {
 	padding: 4px 0;
 	list-style: none;
+	line-height: 18px;
 }
 fieldset.form-generic ul li label {
 	display: inline-block;

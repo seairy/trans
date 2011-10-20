@@ -1,7 +1,7 @@
 <h1>分类列表</h1>
 <div class="categories-list">
   <%= render_tree @categories do |node, child| %>
-    <li><span><%= link_to node.name, node %><%= node.id %>, <%= node.descendants.all.collect {|c| c.id}.join ', ' %></span> <%= permissable_for [User::ROLE_CIO_MANAGER] {"#{link_to '编辑', edit_category_path(node)} | #{link_to '删除', node, :confirm => '确定删除该分类吗？', :method => :delete}"} %></li>
+    <li><span><%= link_to node.name, node %></span> <%= permissable_for [User::ROLE_CIO_MANAGER] {"#{link_to '编辑', edit_category_path(node)} | #{link_to '删除', node, :confirm => '确定删除该分类吗？', :method => :delete}"} %></li>
     <%= child %>
   <% end %>
 </div>

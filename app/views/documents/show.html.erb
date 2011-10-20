@@ -1,7 +1,7 @@
-<h1>查看文档</h1>
+<h1>查看中文文档</h1>
 <fieldset class="form-generic">
   <ul>
-    <li><label>分类：</label><%= (@document.category.ancestors.map{|n| n.name}).join ' - ' %></li>
+    <li><label>分类：</label><%= @document.category.ancestors.map{|n| n.name}.join ' - ' %></li>
   </ul>
   <ul>
     <li><label>标题：</label><%= @document.title %></li>
@@ -14,6 +14,9 @@
   </ul>
   <ul>
     <li><label>中文文稿：</label><%= link_to '点击下载', @document.file.uri, :blank => true %></li>
+  </ul>
+  <ul>
+    <li><label>翻译语种：</label><%= raw @document.translations.collect{|t| link_to(t.language.name, t)}.join ' '%></li>
   </ul>
   <div class="operation-generic">
     <%= raw crud_for_show_tag(@document) %>
