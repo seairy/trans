@@ -115,9 +115,12 @@ class DocumentsController < ApplicationController
           asset.save
           document_title = path.gsub(/\.\w+$/, '')
           word_count = 0
-          unless document_title.scan(/_(\d+)\./).blank?
-            word_count = document_title.scan(/_(\d+)\./)[0][0]
-            document_title = document_title.gsub(/_(\d+)\./, '')
+          p "***********dt:#{document_title}"
+          p "***************document_title.scan(/_(\d+)/).blank? #{document_title.scan(/_(\d+)/).blank?}"
+          unless document_title.scan(/_(\d+)/).blank?
+            p "ssssssssssssssssssss"
+            word_count = document_title.scan(/_(\d+)/)[0][0]
+            document_title = document_title.gsub(/_(\d+)/, '')
           end
           Document.create({ :category_id => @categories_list.blank? ? nil : @categories_list.last[:id], :uploader_id => user_id_in_session, :file => asset, :title => document_title, :word_count => word_count, :priority => 0, :state => Document::STATE_UPLOADED })
         end
