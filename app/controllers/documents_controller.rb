@@ -115,10 +115,7 @@ class DocumentsController < ApplicationController
           asset.save
           document_title = path.gsub(/\.\w+$/, '')
           word_count = 0
-          p "***********dt:#{document_title}"
-          p "***************document_title.scan(/_(\d+)/).blank? #{document_title.scan(/_(\d+)/).blank?}"
           unless document_title.scan(/_(\d+)/).blank?
-            p "ssssssssssssssssssss"
             word_count = document_title.scan(/_(\d+)/)[0][0]
             document_title = document_title.gsub(/_(\d+)/, '')
           end
