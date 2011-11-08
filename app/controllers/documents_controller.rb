@@ -114,7 +114,11 @@ class DocumentsController < ApplicationController
           asset = Asset.new.prepare({ :stream => file.read, :original_filename => path, :content_type => 'application/msword', :size => file.size })
           asset.save
           document_title = path.gsub(/\.\w+$/, '')
-          word_count = (title.scan(/_(\d+)\./)[0][0] unless title.scan(/_(\d+)\./).blank?) || 0
+          word_count = 0
+          unless document_title.scan(/_(\d+)\./).blank?
+            word_count = document_title.scan(/_(\d+)\./)[0][0]
+            document_title = document_title.gsub(/_(\d+)\./, '')
+          end
           Document.create({ :category_id => @categories_list.blank? ? nil : @categories_list.last[:id], :uploader_id => user_id_in_session, :file => asset, :title => document_title, :word_count => word_count, :priority => 0, :state => Document::STATE_UPLOADED })
         end
       end

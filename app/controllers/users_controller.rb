@@ -5,9 +5,9 @@ class UsersController < ApplicationController
     case user_role_in_session
     when User::ROLE_ADMIN
       @users = User.paginate :page => params[:page]
-    when User::CIO_MANAGER
+    when User::ROLE_CIO_MANAGER
       @users = User.editors.paginate :page => params[:page]
-    when User::HF_MANAGER
+    when User::ROLE_HF_MANAGER
       @users = User.assignees.paginate :page => params[:page]
     end
   end
