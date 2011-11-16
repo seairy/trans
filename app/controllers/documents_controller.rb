@@ -2,7 +2,7 @@
 class DocumentsController < ApplicationController
   
   def index
-    @documents = Document.paginate :page => params[:page]
+    @documents = Document.order('created_at DESC').paginate :page => params[:page]
   end
   
   def show
