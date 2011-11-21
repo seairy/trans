@@ -2,10 +2,6 @@
 class SessionsController < ApplicationController
   skip_before_filter :authorize
   
-  def new
-    
-  end
-  
   def create
     user = User.signin params[:account], params[:password]
     unless user.blank?

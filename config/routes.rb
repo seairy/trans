@@ -32,6 +32,7 @@ Trans::Application.routes.draw do
     end
   end
   resources :employees
+  resources :mails
   match 'signin' => 'sessions#new', :as => :signin, :via => [:get]
   match 'signin' => 'sessions#create', :as => :signin, :via => [:post]
   match 'signout' => 'sessions#destroy', :as => :signout

@@ -71,11 +71,12 @@ class Translation < ActiveRecord::Base
         if t.state == STATE_ASSIGNED
           t.update_attribute(:state, STATE_SENT)
           Operation.create({ :translation_id => t.id, :user_id => user_id, :action => Operation::ACTION_ARCHIVE_AND_SENT })
+          FileUtils.copy t.document.file.stored_path, "#{::Rails.root.to_s}/public/archives/#{archive_name}/#{t.id}_#{t.created_at.strftime '%Y%m%d'}_#{t.language.name}_#{t.document.title}#{t.document.file.stored_name.scan(/\.\w+$/)[0]}"
         elsif t.state == STATE_APPROVED
           t.update_attribute(:state, STATE_FINISHED)
           Operation.create({ :translation_id => t.id, :user_id => user_id, :action => Operation::ACTION_ARCHIVE_AND_FINISH })
+          FileUtils.copy t.file.stored_path, "#{::Rails.root.to_s}/public/archives/#{archive_name}/#{t.id}_#{t.created_at.strftime '%Y%m%d'}_#{t.language.name}_#{t.document.title}#{t.document.file.stored_name.scan(/\.\w+$/)[0]}"
         end
-        FileUtils.copy t.document.file.stored_path, "#{::Rails.root.to_s}/public/archives/#{archive_name}/#{t.id}_#{t.created_at.strftime '%Y%m%d'}_#{t.language.name}_#{t.document.title}#{t.document.file.stored_name.scan(/\.\w+$/)[0]}"
       end
       system "cd #{::Rails.root.to_s}/public/archives; rar a #{archive_name}.rar #{archive_name}"
       FileUtils.rm_rf "#{::Rails.root.to_s}/public/archives/#{archive_name}"

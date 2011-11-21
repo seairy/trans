@@ -260,3 +260,30 @@ div.languages {
 	margin: 10px 0;
 	line-height: 20px;
 }
+textarea.mail {
+	padding: 20px;
+	width: 460px;
+	height: 260px;
+	border: 1px #A7BEB7 solid;
+	background: #EEE;
+	scrollbar-face-color: #000; 
+	scrollbar-shadow-color: #FFF; 
+	scrollbar-highlight-color: #000; 
+	scrollbar-3dlight-color: #000; 
+	scrollbar-darkshadow-color: #000; 
+	scrollbar-track-color: #999; 
+	scrollbar-arrow-color: #FFF;
+}
+input.mail {
+	width: 480px;
+    padding: 10px;
+    border: 1px #A7BEB7 solid;
+    background: #EEE;
+}
+input.mail-submit {
+    padding: 4px 10px;
+    border: 1px #A7BEB7 solid;
+	text-align: center;
+	font-weight: bold;
+    background: #EEE;
+}
