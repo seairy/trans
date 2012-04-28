@@ -20,6 +20,11 @@ class TranslationsController < ApplicationController
     end
   end
   
+  def download
+    @translation = Translation.find(params[:id])
+    send_file @translation.file.stored_path, :filename => @translation.human_file_name
+  end
+  
   def generated
     @translations = Translation.generated.paginate :page => params[:page]
   end
@@ -138,6 +143,18 @@ class TranslationsController < ApplicationController
     end
   end
   
+  def batch_archive_finished
+    @translations = Translation.approved
+    if request.post?
+      if params[:translation_ids].blank?
+        redirect_to (params[:searched] ? search_approved_translations_path : batch_archive_translations_path), :alert => '操作失败，请至少选择一个外文文档！'
+      else
+        archive_name = Translation.batch_archive user_id_in_session, params[:translation_ids]
+        send_file "#{::Rails.root.to_s}/public/archives/#{archive_name}", :filename => archive_name, :type => 'application/octet-stream'
+      end
+    end
+  end
+  
   def search
     unless params[:keywords].blank?
       @translations = Translation.search(params[:keywords]).paginate :page => params[:page]
@@ -169,6 +186,15 @@ class TranslationsController < ApplicationController
     else
       @translations = Translation.advanced_search Translation::STATE_APPROVED, params
       render 'translations/search/approved_result'
+    end
+  end
+  
+  def search_finished
+    if request.get?
+      render 'translations/search/finished'
+    else
+      @translations = Translation.advanced_search Translation::STATE_FINISHED, params
+      render 'translations/search/finished_result'
     end
   end
 end

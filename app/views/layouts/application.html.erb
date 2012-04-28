@@ -45,6 +45,7 @@
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '搜索已审核外文文档', search_approved_translations_path}</li>"} %>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '批量归档已审核外文文档', batch_archive_approved_translations_path}</li>"} %>
             <li><%= link_to '已定稿外文文档列表', finished_translations_path %></li>
+            <li><%= link_to '搜索已定稿外文文档', search_finished_translations_path %></li>
           </ul>
           <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_HF_MANAGER] {"<h3>雇员管理</h3><ul><li>#{link_to '添加雇员', new_employee_path}</li><li>#{link_to '雇员列表', employees_path}</li></ul>"} %>
           <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_HF_MANAGER] {"<h3>用户管理</h3><ul><li>#{link_to '添加用户', new_user_path}</li><li>#{link_to '用户列表', users_path}</li></ul>"} %>

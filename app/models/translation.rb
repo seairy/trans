@@ -51,6 +51,10 @@ class Translation < ActiveRecord::Base
     o.created_at unless o.blank?
   end
   
+  def human_file_name
+    "#{id}_#{created_at.strftime '%Y%m%d'}_#{language.name}_#{document.title}#{document.file.stored_name.scan(/\.\w+$/)[0]}"
+  end
+  
   class << self
     def batch_assign user_id, translation_ids, assignee_id
       translation_ids.each do |translation_id|
@@ -75,6 +79,8 @@ class Translation < ActiveRecord::Base
         elsif t.state == STATE_APPROVED
           t.update_attribute(:state, STATE_FINISHED)
           Operation.create({ :translation_id => t.id, :user_id => user_id, :action => Operation::ACTION_ARCHIVE_AND_FINISH })
+          FileUtils.copy t.file.stored_path, "#{::Rails.root.to_s}/public/archives/#{archive_name}/#{t.id}_#{t.created_at.strftime '%Y%m%d'}_#{t.language.name}_#{t.document.title}#{t.document.file.stored_name.scan(/\.\w+$/)[0]}"
+        elsif t.state == STATE_FINISHED
           FileUtils.copy t.file.stored_path, "#{::Rails.root.to_s}/public/archives/#{archive_name}/#{t.id}_#{t.created_at.strftime '%Y%m%d'}_#{t.language.name}_#{t.document.title}#{t.document.file.stored_name.scan(/\.\w+$/)[0]}"
         end
       end

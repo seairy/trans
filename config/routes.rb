@@ -22,6 +22,9 @@ Trans::Application.routes.draw do
       get :generated, :assigned, :sent, :translated, :approved, :finished, :batch_assign, :batch_archive, :batch_upload, :batch_approve, :batch_archive_approved, :search, :search_generated, :search_assigned, :search_approved, :search_finished, :autocomplete_employee_name
       post :batch_assign, :batch_archive, :batch_upload, :batch_approve, :batch_archive_approved, :search_generated, :search_assigned, :search_approved, :search_finished
     end
+    member do
+      get :download
+    end
     resources :comments
   end
   resources :users do

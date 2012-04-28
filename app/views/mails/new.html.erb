@@ -1,0 +1,9 @@
+<%= form_tag mails_path, :method => :post do %>
+  <%= text_area_tag :addresses_with_names, nil, :class => 'mail' %>
+  <hr style="margin: 10px 0" />
+  <%= text_field_tag :title, nil, :class => 'mail' %>
+  <hr style="margin: 10px 0" />
+  <%= text_area_tag :mail_content, nil, :class => 'mail' %>
+  <hr style="margin: 10px 0" />
+  <p class="tac"><%= submit_tag '立即发送邮件', :class => 'mail-submit' %></p>
+<% end %>
