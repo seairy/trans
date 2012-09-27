@@ -143,6 +143,17 @@ module ApplicationHelper
     options_for_select employee_role_options, options
   end
   
+  def translation_state_options_for_select options = {}
+    translation_state_options = {}
+    translation_state_options.merge!({ '等待指派' => Translation::STATE_GENERATED })
+    translation_state_options.merge!({ '已指派，等待翻译' => Translation::STATE_ASSIGNED })
+    translation_state_options.merge!({ '已发出，等待回稿' => Translation::STATE_SENT })
+    translation_state_options.merge!({ '已翻译，等待审核' => Translation::STATE_TRANSLATED })
+    translation_state_options.merge!({ '已审核' => Translation::STATE_APPROVED })
+    translation_state_options.merge!({ '已完成' => Translation::STATE_FINISHED })
+    options_for_select translation_state_options, options
+  end
+  
   def all_languages
     Language.all
   end

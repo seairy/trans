@@ -5,7 +5,7 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
+gem "mysql2", "~> 0.3.7", :git => "git://github.com/brianmario/mysql2.git", :ref => "d3a96b8"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -31,10 +31,12 @@ group :test do
   gem 'turn', :require => false
 end
 
-gem 'will_paginate', '~> 3.0.beta'
+gem 'will_paginate'
 gem 'RedCloth'
 gem 'rubyzip'
 gem 'nested_set'
 gem 'rails3-jquery-autocomplete'
+gem 'ekuseru'
+gem 'bcrypt-ruby'
 gem 'execjs'
 gem 'therubyracer'

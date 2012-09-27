@@ -25,6 +25,10 @@
             <%= permissable_for [User::ROLE_CIO_MANAGER] {"<li>#{link_to '添加分类', new_category_path}</li>"} %>
             <li><%= link_to '分类列表', categories_path %></li>
           </ul>
+          <h3>数据统计</h3>
+          <ul>
+            <li><%= link_to '导出Excel', export_translations_excels_path %></li>
+          </ul>
           <h3>文档管理</h3>
           <ul>
             <%= permissable_for [User::ROLE_CIO_MANAGER, User::ROLE_EDITOR] {"<li>#{link_to '中文文档列表', documents_path}</li>"} %>

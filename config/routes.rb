@@ -6,6 +6,12 @@ Trans::Application.routes.draw do
       get :read, :unread
     end
   end
+  resources :excels do
+    collection do
+      get :export_translations
+      post :export_translations
+    end
+  end
   resources :categories
   resources :languages
   resources :documents do

@@ -1,0 +1,10 @@
+__filename = "translations_#{Time.now.strftime '%Y%m%d%H%M'}.xls"
+
+title_format = Spreadsheet::Format.new(:color => :blue, :weight => :bold)
+
+sheet = xls.create_worksheet :name => '文档'
+sheet.row(0).concat %w{序号 所属分类 语种 标题 字数 状态 创建时间}
+sheet.row(0).default_format = title_format
+@translations.each_with_index do |t, i|
+  sheet.update_row i + 1, t.id, t.document.category.self_and_ancestors.map{|c| c.name}.join(' - '), t.language.name, t.document.title, t.document.word_count, human_translation_state_for(t.state), human_datetime_for(t.document.created_at)
+end
